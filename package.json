@@ -1,0 +1,32 @@
+{
+  "name": "@synoppy/mcp",
+  "version": "1.0.0",
+  "description": "MCP server for the Synoppy web-data API — read, screenshot, crawl, map, extract, classify, enrich, and images as tools for any MCP client.",
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "author": "Saanora <support@synoppy.com>",
+  "homepage": "https://synoppy.com/docs/mcp",
+  "repository": { "type": "git", "url": "git+https://github.com/Synoppy/synoppy-mcp.git" },
+  "bugs": { "url": "https://github.com/Synoppy/synoppy-mcp/issues" },
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": { "synoppy-mcp": "dist/index.js" },
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --minify --platform=node --format=esm --target=node18 --packages=external --outfile=dist/index.js && tsc --emitDeclarationOnly",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["mcp", "model-context-protocol", "synoppy", "web-data", "scraping", "crawler", "agents"],
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.0"
+  }
+}
