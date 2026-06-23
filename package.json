@@ -1,7 +1,7 @@
 {
   "name": "@synoppy/mcp",
-  "version": "1.0.0",
-  "description": "MCP server for the Synoppy web-data API — read, screenshot, crawl, map, extract, classify, enrich, and images as tools for any MCP client.",
+  "version": "1.1.0",
+  "description": "MCP server for the Synoppy web-data API — read, screenshot, crawl, map, search, extract, classify, enrich, and images as tools for any MCP client.",
   "license": "MIT",
   "publishConfig": { "access": "public" },
   "author": "Saanora <support@synoppy.com>",

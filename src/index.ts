@@ -40,7 +40,7 @@ function asText(data: unknown) {
   };
 }
 
-const server = new McpServer({ name: "synoppy", version: "1.0.0" });
+const server = new McpServer({ name: "synoppy", version: "1.1.0" });
 
 server.tool(
   "synoppy_read",
@@ -98,6 +98,10 @@ server.tool(
     url: z.string(),
     prompt: z.string().optional().describe("Describe the JSON shape you want (alias: instruction)"),
     instruction: z.string().optional().describe("Alias for prompt"),
+    schema: z
+      .record(z.unknown())
+      .optional()
+      .describe("Optional JSON Schema to constrain the output to an exact shape"),
   },
   async (args) => asText(await call("/api/extract", args)),
 );
@@ -136,6 +140,20 @@ server.tool(
   "Pull every image off a page with alt text and dimensions. Returns creditsUsed/creditsRemaining.",
   { url: z.string() },
   async (args) => asText(await call("/api/images", args)),
+);
+
+server.tool(
+  "synoppy_search",
+  "Search the live web and get back ranked results (title, url, snippet); optionally read each result into clean markdown.",
+  {
+    query: z.string().describe("The search query"),
+    maxResults: z.number().int().min(1).max(15).optional().describe("Max results (1-15, default 5)"),
+    markdown: z.boolean().optional().describe("Also read each result into clean markdown, in one trip"),
+    includeDomains: z.array(z.string()).optional().describe("Only return results from these domains"),
+    excludeDomains: z.array(z.string()).optional().describe("Never return results from these domains"),
+    fanout: z.boolean().optional().describe("Expand the query into variations for higher recall (costs more)"),
+  },
+  async (args) => asText(await call("/api/search", args)),
 );
 
 // NOTE: /api/act is not live yet (coming soon) and is intentionally not
